@@ -1,8 +1,8 @@
 /*
- * Nivo Lightbox v1.3.1
+ * Nivo Lightbox v1.3.2
  * http://dev7studios.com/nivo-lightbox
  *
- * Copyright 2013, Dev7studios
+ * Copyright 2017, Dev7studios, falkolab
  * Free to use and abuse under the MIT license.
  * http://www.opensource.org/licenses/mit-license.php
  */
@@ -21,6 +21,7 @@
             afterShowLightbox: function(lightbox){},
             beforeHideLightbox: function(){},
             afterHideLightbox: function(){},
+            ajaxPopulated: function(){},
             beforePrev: function(element){},
             onPrev: function(element){},
             beforeNext: function(element){},
@@ -80,7 +81,8 @@
 			if(!check) return;
 
 			e.preventDefault();
-            this.options.beforeShowLightbox.call(this);
+            $this.$el.trigger('lightbox:beforeshow');
+            this.options.beforeShowLightbox();
             var lightbox = this.constructLightbox();
             if(!lightbox) return;
             var content = lightbox.find('.nivo-lightbox-content');
@@ -123,7 +125,8 @@
 
             setTimeout(function(){
                 lightbox.addClass('nivo-lightbox-open');
-                $this.options.afterShowLightbox.call(this, [ lightbox ]);
+                $this.$el.trigger('lightbox:aftershow', [ lightbox ]);
+                $this.options.afterShowLightbox.call($this.$el, [ lightbox ]);
             }, 1); // For CSS transitions
         },
 
@@ -257,6 +260,9 @@
 								});
 							}
 						});
+
+                        $this.$el.trigger('lightbox:ajaxpopulated', [ content ]);
+                        $this.options.ajaxPopulated.apply($this.$el, [content])
 					},
 					error: function(){
 						var wrap = $('<div class="nivo-lightbox-error"><p>'+ $this.options.errorMessage +'</p></div>');
