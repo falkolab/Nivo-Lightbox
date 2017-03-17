@@ -274,7 +274,7 @@
             else if(href.substring(0, 1) == '#' && link.attr('data-lightbox-type') == 'inline'){
                 if($(href).length){
                     var wrap = $('<div class="nivo-lightbox-inline" />');
-					wrap.append($(href).clone().show());
+					wrap.append($(href).detach().show());
                     content.html(wrap).removeClass('nivo-lightbox-loading');
 
                     // Vertically center html
@@ -387,6 +387,12 @@
             // Remove click handlers
             $('.nivo-lightbox-prev').off('click');
             $('.nivo-lightbox-next').off('click');
+
+            //debugger;
+            var content = $('.nivo-lightbox-content').children('.nivo-lightbox-inline'), inlineEl;
+            if(content.length) {
+                $('body').append(content.detach().hide());
+            }
 
             // Empty content (for videos)
             $('.nivo-lightbox-content').empty();
