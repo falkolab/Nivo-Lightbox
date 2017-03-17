@@ -1,5 +1,5 @@
 /*
- * Nivo Lightbox v1.3.2
+ * Nivo Lightbox v1.4.1
  * http://dev7studios.com/nivo-lightbox
  *
  * Copyright 2017, Dev7studios, falkolab
